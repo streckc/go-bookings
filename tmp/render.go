@@ -11,7 +11,7 @@ var templateCache = make(map[string]*template.Template)
 
 // RenderTemplate parses the template and outputs to writer
 func RenderTemplateTest(w http.ResponseWriter, t string) {
-	parsedTemplate, _ := template.ParseFiles("./templates/"+t, "./templates/base.layout.tmpl")
+	parsedTemplate, _ := template.ParseFiles("./templates/"+t, "./templates/base.layout.gohtml")
 	err := parsedTemplate.Execute(w, nil)
 	if err != nil {
 		log.Printf("error parsing template: %v", err)
@@ -48,7 +48,7 @@ func RenderTemplate(w http.ResponseWriter, t string) {
 func createTemplateCache(t string) error {
 	templates := []string{
 		fmt.Sprintf("./templates/%s", t),
-		"./templates/base.layout.tmpl",
+		"./templates/base.layout.gohtml",
 	}
 	tmpl, err := template.ParseFiles(templates...)
 	if err != nil {
