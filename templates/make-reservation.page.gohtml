@@ -1,0 +1,65 @@
+{{template "base"}}
+
+{{define "content"}}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="text-center mt-5">Search for Availability</h1>
+            <form action="/reservation" method="POST" class="needs-validation" novalidate>
+                <div class="mb-3">
+                    <label for="first_name" class="form-label">First Name</label>
+                    <input type="text" required class="form-control" id="first_name" name="first_name" autocomplete="off" placeholder="first name" />
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Please enter your first name.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="last_name" class="form-label">Last Name</label>
+                    <input type="text" required class="form-control" id="last_name" name="last_name" autocomplete="off" placeholder="last name" />
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Please enter your last name.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-Mail</label>
+                    <input type="email" required class="form-control" id="email" name="email" autocomplete="off" placeholder="e-mail address" />
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Please enter an e-mail.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="text" required class="form-control" id="phone" name="phone" autocomplete="off" placeholder="(xxx) xxx-xxxx" />
+                    <div class="valid-feedback">Looks good!</div>
+                    <div class="invalid-feedback">Please enter a phone number.</div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Make Reservation</button>
+            </form>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{define "js"}}
+<script>
+(() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+</script>
+{{end}}

@@ -3,9 +3,145 @@
 {{define "content"}}
 <div class="container">
     <div class="row">
-        <div class="col">
-            <h1 class="text-center mt-4">This will be the reservation page</h1>
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <h1 class="text-center mt-5">Search for Availability</h1>
+            <form action="/reservation" method="GET" class="needs-validation" novalidate>
+                <div id="foo" class="row mb-3">
+                    <div class="col">
+                        <input type="text" name="start" required placeholder="arrival">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="end" required placeholder="departure">  
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Search Availability</button>
+            </form>
         </div>
     </div>
 </div>
+{{end}}
+
+{{define "js"}}
+<script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/js/datepicker-full.min.js"></script>
+<script src="https://unpkg.com/notie"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+(() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
+
+const elem = document.getElementById('foo');
+const rangepicker = new DateRangePicker(elem, {
+    "format": "yyyy-mm-dd",
+}); 
+
+function notify(msg, msgType) {
+    notie.alert({
+        type: msgType, // optional, default = 4, enum: [1, 2, 3, 4, 5, 'success', 'warning', 'error', 'info', 'neutral']
+        text: msg,
+        // stay: Boolean, // optional, default = false
+        // time: Number, // optional, default = 3, minimum = 1,
+        // position: String // optional, default = 'top', enum: ['top', 'bottom']
+    })
+}
+
+function notifyModal(title, text, icon, buttonLabel) {
+    Swal.fire({
+        title: title,
+        html: text,
+        icon: icon,
+        confirmButtonText: buttonLabel
+    });
+}
+
+    let attention = Prompt();
+
+    function Prompt() {
+        let toast = function (c) {
+            const{
+                msg = '',
+                icon = 'success',
+                position = 'top-end',
+
+            } = c;
+
+            const Toast = Swal.mixin({
+                toast: true,
+                title: msg,
+                position: position,
+                icon: icon,
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+
+            Toast.fire({})
+        }
+
+        let success = function (c) {
+            const {
+                msg = "",
+                title = "",
+                footer = "",
+            } = c
+
+            Swal.fire({
+                icon: 'success',
+                title: title,
+                text: msg,
+                footer: footer,
+            })
+
+        }
+
+        let error = function (c) {
+            const {
+                msg = "",
+                title = "",
+                footer = "",
+            } = c
+
+            Swal.fire({
+                icon: 'error',
+                title: title,
+                text: msg,
+                footer: footer,
+            })
+
+        }
+
+        return {
+            toast: toast,
+            success: success,
+            error: error,
+        }
+    }
+
+</script>
+{{end}}
+
+{{define "css"}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.2.0/dist/css/datepicker-bs5.min.css">
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
 {{end}}

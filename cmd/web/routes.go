@@ -25,6 +25,7 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Get("/majors", handlers.Repo.MajorsRoom)
 	mux.Get("/contact", handlers.Repo.Contact)
 	mux.Get("/reservation", handlers.Repo.Reservation)
+	mux.Get("/make-reservation", handlers.Repo.MakeReservation)
 
 	workDir, _ := os.Getwd()
 	staticDir := http.Dir(filepath.Join(workDir, "static"))
