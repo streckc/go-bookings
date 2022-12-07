@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"github.com/alexedwards/scs/v2"
-	"github.com/streckc/go-bookings/pkg/config"
-	"github.com/streckc/go-bookings/pkg/handlers"
-	"github.com/streckc/go-bookings/pkg/render"
+	"github.com/streckc/go-bookings/internal/config"
+	"github.com/streckc/go-bookings/internal/handlers"
+	"github.com/streckc/go-bookings/internal/render"
 )
 
 const portNumber = ":8000"

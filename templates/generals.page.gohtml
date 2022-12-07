@@ -1,10 +1,4 @@
-{{template "base"}}
-
-{{define "css"}}
-<style>
-.room-image { max-width: 50% }
-</style>
-{{end}}
+{{template "base" .}}
 
 {{define "content"}}
 <div class="container">
@@ -26,10 +20,6 @@
             </p>
         </div>
     </div>
-    <div class="row">
-        <div class="col text-center">
-            <a href="/reservation" class="btn btn-success">Check Availability</a>
-        </div>
-    </div>
 </div>
+{{template "room" .}}
 {{end}}

@@ -7,8 +7,9 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/streckc/go-bookings/pkg/config"
-	"github.com/streckc/go-bookings/pkg/models"
+	"github.com/justinas/nosurf"
+	"github.com/streckc/go-bookings/internal/config"
+	"github.com/streckc/go-bookings/internal/models"
 )
 
 var app *config.AppConfig
@@ -19,12 +20,13 @@ func NewTemplates(a *config.AppConfig) {
 }
 
 // AddDefaultData will add default data that all pages need
-func AddDefaultData(td *models.TemplateData) *models.TemplateData {
+func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateData {
+	td.CSRFToken = nosurf.Token(r)
 	return td
 }
 
 // RenderTemplate parses the template and outputs to writer
-func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
+func RenderTemplate(w http.ResponseWriter, r *http.Request, tmpl string, td *models.TemplateData) {
 	var tc map[string]*template.Template
 	var err error
 	// get the template cache from app config
@@ -45,7 +47,7 @@ func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData)
 
 	buf := new(bytes.Buffer)
 
-	td = AddDefaultData(td)
+	td = AddDefaultData(td, r)
 
 	err = t.Execute(buf, *td)
 	if err != nil {

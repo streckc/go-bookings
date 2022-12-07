@@ -1,37 +1,43 @@
-{{template "base"}}
+{{template "base" .}}
 
 {{define "content"}}
 <div class="container">
     <div class="row">
         <div class="col">
             <h1 class="text-center mt-5">Search for Availability</h1>
-            <form action="/reservation" method="POST" class="needs-validation" novalidate>
+            {{$res := index .Data "reservation"}}
+            <form action="/make-reservation" method="POST" class="" novalidate>
+                <input type="hidden" name="csrf_token" value="{{.CSRFToken}}" />
                 <div class="mb-3">
                     <label for="first_name" class="form-label">First Name</label>
-                    <input type="text" required class="form-control" id="first_name" name="first_name" autocomplete="off" placeholder="first name" />
-                    <div class="valid-feedback">Looks good!</div>
-                    <div class="invalid-feedback">Please enter your first name.</div>
+                    {{with .Form.Errors.Get "first_name"}}
+                        <label class="text-danger">{{.}}</label>
+                    {{end}}
+                    <input type="text" required class="form-control {{with .Form.Errors.Get "first_name"}}is-invalid{{end}}" id="first_name" name="first_name" autocomplete="off" placeholder="first name" value="{{$res.FirstName}}" />
                 </div>
 
                 <div class="mb-3">
                     <label for="last_name" class="form-label">Last Name</label>
-                    <input type="text" required class="form-control" id="last_name" name="last_name" autocomplete="off" placeholder="last name" />
-                    <div class="valid-feedback">Looks good!</div>
-                    <div class="invalid-feedback">Please enter your last name.</div>
+                    {{with .Form.Errors.Get "last_name"}}
+                        <label class="text-danger">{{.}}</label>
+                    {{end}}
+                    <input type="text" required class="form-control {{with .Form.Errors.Get "last_name"}}is-invalid{{end}}" id="last_name" name="last_name" autocomplete="off" placeholder="last name" value="{{$res.LastName}}" />
                 </div>
 
                 <div class="mb-3">
                     <label for="email" class="form-label">E-Mail</label>
-                    <input type="email" required class="form-control" id="email" name="email" autocomplete="off" placeholder="e-mail address" />
-                    <div class="valid-feedback">Looks good!</div>
-                    <div class="invalid-feedback">Please enter an e-mail.</div>
+                    {{with .Form.Errors.Get "email"}}
+                        <label class="text-danger">{{.}}</label>
+                    {{end}}
+                    <input type="email" required class="form-control {{with .Form.Errors.Get "email"}}is-invalid{{end}}" id="email" name="email" autocomplete="off" placeholder="e-mail address" value="{{$res.Email}}" />
                 </div>
 
                 <div class="mb-3">
                     <label for="phone" class="form-label">Phone Number</label>
-                    <input type="text" required class="form-control" id="phone" name="phone" autocomplete="off" placeholder="(xxx) xxx-xxxx" />
-                    <div class="valid-feedback">Looks good!</div>
-                    <div class="invalid-feedback">Please enter a phone number.</div>
+                    {{with .Form.Errors.Get "phone"}}
+                        <label class="text-danger">{{.}}</label>
+                    {{end}}
+                    <input type="text" required class="form-control {{with .Form.Errors.Get "phone"}}is-invalid{{end}}" id="phone" name="phone" autocomplete="off" placeholder="(xxx) xxx-xxxx" value="{{$res.Phone}}" />
                 </div>
 
                 <button type="submit" class="btn btn-primary">Make Reservation</button>

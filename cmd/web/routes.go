@@ -7,8 +7,8 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"github.com/streckc/go-bookings/pkg/config"
-	"github.com/streckc/go-bookings/pkg/handlers"
+	"github.com/streckc/go-bookings/internal/config"
+	"github.com/streckc/go-bookings/internal/handlers"
 )
 
 func routes(app *config.AppConfig) http.Handler {
@@ -21,11 +21,14 @@ func routes(app *config.AppConfig) http.Handler {
 
 	mux.Get("/", handlers.Repo.Home)
 	mux.Get("/about", handlers.Repo.About)
-	mux.Get("/generals", handlers.Repo.GeneralsRoom)
-	mux.Get("/majors", handlers.Repo.MajorsRoom)
+	mux.Get("/generals-quarters", handlers.Repo.GeneralsRoom)
+	mux.Get("/majors-suite", handlers.Repo.MajorsRoom)
 	mux.Get("/contact", handlers.Repo.Contact)
-	mux.Get("/reservation", handlers.Repo.Reservation)
 	mux.Get("/make-reservation", handlers.Repo.MakeReservation)
+	mux.Post("/make-reservation", handlers.Repo.PostReservation)
+	mux.Get("/search-availability", handlers.Repo.Availability)
+	mux.Post("/search-availability", handlers.Repo.PostAvailability)
+	mux.Post("/search-availability-json", handlers.Repo.AvailabilityJSON)
 
 	workDir, _ := os.Getwd()
 	staticDir := http.Dir(filepath.Join(workDir, "static"))
